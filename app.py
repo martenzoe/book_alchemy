@@ -100,6 +100,27 @@ def home():
     return render_template('home.html', books=books, sort_by=sort_by, search_keyword=search_keyword)
 
 
+@app.route('/book/<int:book_id>/delete', methods=['POST'])
+def delete_book(book_id):
+    # Suche das Buch in der Datenbank
+    book = Book.query.get_or_404(book_id)
+
+    # Speichere den Autor des Buchs
+    author = book.author
+
+    # Lösche das Buch
+    db.session.delete(book)
+    db.session.commit()
+
+    # Prüfe, ob der Autor noch weitere Bücher hat
+    if not author.books:  # Wenn die Liste leer ist
+        db.session.delete(author)
+        db.session.commit()
+
+    # Erfolgsnachricht und Weiterleitung zur Homepage
+    return redirect('/home')
+
+
 if __name__ == '__main__':
     # Run the app in debug mode
     app.run(debug=True)

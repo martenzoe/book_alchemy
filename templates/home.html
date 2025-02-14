@@ -42,10 +42,15 @@
           {% endif %}
 
           <!-- Display Book Title and Author -->
-          <div>
+          <div style="flex-grow: 1;">
             <h3>{{ book.title }}</h3>
             <p>by {{ book.author.name }}</p>
           </div>
+
+          <!-- Delete Button -->
+          <form method="POST" action="/book/{{ book.book_id }}/delete" style="margin-left: 20px;">
+            <button type="submit" style="background-color: red; color: white;">Delete Book</button>
+          </form>
         </div>
         <hr>
       {% endfor %}
