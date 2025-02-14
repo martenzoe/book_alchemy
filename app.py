@@ -70,20 +70,34 @@ def add_book():
     return render_template('add_book.html', authors=authors)
 
 
-@app.route('/home', methods=['GET'])
+@app.route('/home', methods=['GET', 'POST'])
 def home():
-    # Query all books from the database
-    books = Book.query.all()
+    # Standardwerte für Sortierung und Suche
+    sort_by = request.args.get('sort_by', 'title')
+    search_keyword = request.form.get('search_keyword', '')
 
-    # Generate cover URLs for each book
+    # Basisabfrage für Bücher
+    query = Book.query
+
+    # Filter hinzufügen, wenn ein Suchbegriff eingegeben wurde
+    if search_keyword:
+        query = query.filter(Book.title.ilike(f"%{search_keyword}%"))
+
+    # Sortierung anwenden
+    if sort_by == 'author':
+        books = query.join(Author).order_by(Author.name).all()
+    else:
+        books = query.order_by(Book.title).all()
+
+    # Dynamische Cover-URLs generieren
     for book in books:
         if book.isbn:
             book.cover_url = f"https://covers.openlibrary.org/b/isbn/{book.isbn}-L.jpg"
         else:
-            book.cover_url = None  # Fallback, falls keine ISBN vorhanden ist
+            book.cover_url = None  # Fallback für fehlende ISBN
 
-    # Render the home.html template with the books data
-    return render_template('home.html', books=books)
+    # Bücher und Suchbegriff an das Template übergeben
+    return render_template('home.html', books=books, sort_by=sort_by, search_keyword=search_keyword)
 
 
 if __name__ == '__main__':

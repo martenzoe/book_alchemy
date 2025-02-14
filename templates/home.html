@@ -10,25 +10,49 @@
 
     <h1>Library</h1>
 
-    {% for book in books %}
-      <div style="display: flex; align-items: center; margin-bottom: 20px;">
-        <!-- Display Book Cover -->
-        {% if book.cover_url %}
-          <img src="{{ book.cover_url }}" alt="{{ book.title }} cover" style="width: 100px; height: auto; margin-right: 20px;">
-        {% else %}
-          <div style="width: 100px; height: 150px; background-color: #ccc; margin-right: 20px; display: flex; align-items: center; justify-content: center;">
-            No Cover
-          </div>
-        {% endif %}
+    <!-- Search Form -->
+    <form method="POST" action="/home">
+      <input type="text" name="search_keyword" placeholder="Search for a book..." value="{{ search_keyword }}">
+      <button type="submit">Search</button>
+      <br><br>
+    </form>
 
-        <!-- Display Book Title and Author -->
-        <div>
-          <h3>{{ book.title }}</h3>
-          <p>by {{ book.author.name }}</p>
+    <!-- Sorting Buttons -->
+    <div>
+      <a href="/home?sort_by=title">
+        <button>Sort by Title</button>
+      </a>
+      <a href="/home?sort_by=author">
+        <button>Sort by Author</button>
+      </a>
+      <br><br>
+    </div>
+
+    <!-- Books Display -->
+    {% if books %}
+      {% for book in books %}
+        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+          <!-- Display Book Cover -->
+          {% if book.cover_url %}
+            <img src="{{ book.cover_url }}" alt="{{ book.title }} cover" style="width: 100px; height: auto; margin-right: 20px;">
+          {% else %}
+            <div style="width: 100px; height: 150px; background-color: #ccc; margin-right: 20px; display: flex; align-items: center; justify-content: center;">
+              No Cover
+            </div>
+          {% endif %}
+
+          <!-- Display Book Title and Author -->
+          <div>
+            <h3>{{ book.title }}</h3>
+            <p>by {{ book.author.name }}</p>
+          </div>
         </div>
-      </div>
-      <hr>
-    {% endfor %}
+        <hr>
+      {% endfor %}
+    {% else %}
+      <!-- No Results Message -->
+      <p>No books found matching your search criteria.</p>
+    {% endif %}
 
   </body>
 </html>
