@@ -72,6 +72,13 @@ def add_book():
     return render_template('add_book.html', authors=authors)
 
 
+@app.route('/home', methods=['GET'])
+def home():
+    # Query all books from the database
+    books = Book.query.all()
+
+    # Render the home.html template with the books data
+    return render_template('home.html', books=books)
 
 
 
