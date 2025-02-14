@@ -5,7 +5,8 @@ from data_models import db, Author, Book
 app = Flask(__name__)
 
 # Configure the SQLite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/martenzollner/Desktop/new_projects/book_alchemy/data/library.sqlite'
+app.config[
+    'SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/martenzollner/Desktop/new_projects/book_alchemy/data/library.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Avoid unnecessary warnings
 
 # Bind the database to the app
@@ -15,22 +16,29 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
+
 @app.route('/add_author', methods=['GET', 'POST'])
 def add_author():
+    """
+    Handle adding a new author to the database.
+
+    GET: Render the form to add a new author.
+    POST: Process the form data and add the new author to the database.
+    """
     if request.method == 'POST':
         # Get data from the form
         name = request.form.get('name')
         birth_date = request.form.get('birthdate')
         date_of_death = request.form.get('date_of_death')
 
-        # Create new Author object
+        # Create a new Author object
         new_author = Author(
             name=name,
             birth_date=birth_date,
             date_of_death=date_of_death if date_of_death else None  # Handle empty input
         )
 
-        # Add new author to the database
+        # Add the new author to the database
         db.session.add(new_author)
         db.session.commit()
 
@@ -43,6 +51,12 @@ def add_author():
 
 @app.route('/add_book', methods=['GET', 'POST'])
 def add_book():
+    """
+    Handle adding a new book to the database.
+
+    GET: Render the form to add a new book and fetch all authors for the dropdown menu.
+    POST: Process the form data and add the new book to the database.
+    """
     if request.method == 'POST':
         # Get data from the form
         isbn = request.form.get('isbn')
@@ -58,7 +72,7 @@ def add_book():
             author_id=author_id  # Link the book to the selected author
         )
 
-        # Add new book to the database
+        # Add the new book to the database
         db.session.add(new_book)
         db.session.commit()
 
@@ -72,6 +86,12 @@ def add_book():
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
+    """
+    Handle displaying the home page with a list of books.
+
+    GET: Fetch books, apply sorting and search filters, then render the home page.
+    POST: Process the search keyword to filter books.
+    """
     # Standardwerte für Sortierung und Suche
     sort_by = request.args.get('sort_by', 'title')
     search_keyword = request.form.get('search_keyword', '')
@@ -102,6 +122,11 @@ def home():
 
 @app.route('/book/<int:book_id>/delete', methods=['POST'])
 def delete_book(book_id):
+    """
+    Handle deleting a book from the database.
+
+    Check if the author has any remaining books. If no books are left, delete the author.
+    """
     # Suche das Buch in der Datenbank
     book = Book.query.get_or_404(book_id)
 
