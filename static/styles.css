@@ -47,40 +47,65 @@ body {
   padding: 0 var(--grid-gutter-width);
 }
 
-/* Navigation */
+/* Navigation Bar */
 .navbar {
-  position: sticky;
-  top: 0;
-  height: var(--nav-height);
-  background-color: var(--secondary-background);
-  color: var(--text-color);
+  position: relative; /* Deactivated sticky for mobile */
+  background: var(--primary-background);
+  color: white;
+  padding: 15px 0;
   z-index: 1000;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.navbar .container {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 10px var(--grid-gutter-width);
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .navbar .logo {
   font-size: 24px;
   font-weight: bold;
-  color: var(--primary-color);
+  text-decoration: none;
+  color: white;
 }
 
 .navbar .nav-links {
-  display: flex;
   list-style: none;
+  display: flex;
   gap: 20px;
+}
+
+.navbar .nav-links li {
+  display: inline;
 }
 
 .navbar .nav-links a {
   text-decoration: none;
-  color: var(--text-color);
-  transition: color 0.3s ease-in-out;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
 }
 
-.navbar .nav-links a:hover {
-  color: var(--secondary-color);
+.navbar .nav-links a:hover,
+.navbar .nav-links a.active {
+  background: var(--accent-color);
+}
+
+/* Media Query for Sticky Navigation on larger screens */
+@media (min-width: 768px) {
+  .navbar {
+    position: sticky;
+    top: 0;
+  }
+
+  body {
+    padding-top: var(--nav-height);
+  }
 }
 
 /* Parallax Header */
@@ -115,33 +140,33 @@ body {
 .search-form {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  align-items: center;
+  width: 100%;
+  margin: 20px auto;
 }
 
 .search-form input {
-  width: 300px;
-  padding: 8px;
-  border: 1px solid var(--secondary-color);
-  border-radius: 5px;
+  width: 300px;  /* Einheitliche Breite */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
   font-size: 16px;
-  background-color: var(--secondary-background);
-  color: var(--text-color);
+  outline: none;
 }
 
 .search-form button {
-  margin-left: 10px;
-  padding: 8px 16px;
-  background-color: var(--accent-color);
+  padding: 10px 20px;
+  background: var(--accent-color);
   color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 0 5px 5px 0;
   cursor: pointer;
+  font-size: 16px;
   transition: background 0.3s ease-in-out;
 }
 
 .search-form button:hover {
-  background-color: #D34C56;
+  background: var(--primary-background);
 }
 
 /* Book Grid */
@@ -196,4 +221,54 @@ body {
 
 .delete-form button:hover {
   background-color: #D34C56;
+}
+
+/* Form Styling */
+.form-container {
+  width: 50%;
+  max-width: 600px;
+  background: var(--secondary-background);
+  padding: 20px;
+  margin: 40px auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  font-size: 16px;
+  color: var(--primary-color);
+  margin-bottom: 5px;
+}
+
+form input,
+form select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid var(--secondary-color);
+  border-radius: 5px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin-bottom: 15px;
+}
+
+form input:focus,
+form select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+form input[type="submit"] {
+  background: var(--accent-color);
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+form input[type="submit"]:hover {
+  background: #D34C56;
 }

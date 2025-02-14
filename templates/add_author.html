@@ -4,21 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Author</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   </head>
   <body>
 
-  <form action="/add_author" method="POST">
-  <label for="name">Author Name:</label>
-  <input type="text" id="name" name="name" required><br><br>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="container">
+        <a href="{{ url_for('home') }}" class="logo">Library</a>
+        <ul class="nav-links">
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('add_book') }}">Add Book</a></li>
+          <li><a href="{{ url_for('add_author') }}" class="active">Add Author</a></li>
+        </ul>
+      </div>
+    </nav>
 
-  <label for="birthdate">Birthdate:</label>
-  <input type="date" id="birthdate" name="birthdate" required><br><br>
+    <div class="form-container">
+      <h2>Add New Author</h2>
+      <form action="/add_author" method="POST">
+        <label for="name">Author Name:</label>
+        <input type="text" id="name" name="name" required>
 
-  <label for="date_of_death">Date of Death:</label>
-  <input type="date" id="date_of_death" name="date_of_death"><br><br>
-  <input type="submit" value="Add Author">
+        <label for="birthdate">Birthdate:</label>
+        <input type="date" id="birthdate" name="birthdate" required>
 
-  </form>
+        <label for="date_of_death">Date of Death:</label>
+        <input type="date" id="date_of_death" name="date_of_death">
+
+        <input type="submit" value="Add Author">
+      </form>
+    </div>
 
   </body>
 </html>
