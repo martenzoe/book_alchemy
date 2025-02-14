@@ -7,9 +7,14 @@
   </head>
   <body>
 
+    <h1>Library</h1>
+
     {% for book in books %}
-    <div> <h3>{{ book.title }}</h3>
-    </div>
+      <div>
+        <h3>{{ book.title }}</h3>
+        <p>by {{ book.author.name }}</p>
+      </div>
+      <hr>
     {% endfor %}
 
   </body>

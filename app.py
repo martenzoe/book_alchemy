@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect
-from flask_sqlalchemy import SQLAlchemy
 from data_models import db, Author, Book
 
 # Initialize the Flask app
@@ -13,11 +12,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Avoid unnecessary warnin
 db.init_app(app)
 
 # Create the tables (run once)
-'''with app.app_context():
-    db.create_all()'''
+with app.app_context():
+    db.create_all()
 
-
-@app.route('/add_author', methods = ['GET', 'POST'])
+@app.route('/add_author', methods=['GET', 'POST'])
 def add_author():
     if request.method == 'POST':
         # Get data from the form
@@ -27,9 +25,9 @@ def add_author():
 
         # Create new Author object
         new_author = Author(
-            name = name,
-            birth_date = birth_date,
-            date_of_death = date_of_death if date_of_death else None # Handle empty input
+            name=name,
+            birth_date=birth_date,
+            date_of_death=date_of_death if date_of_death else None  # Handle empty input
         )
 
         # Add new author to the database
@@ -39,11 +37,11 @@ def add_author():
         # Redirect to the same page after adding the author
         return redirect('/add_author')
 
-    # Render the HTML for the GET requests
+    # Render the HTML for GET requests
     return render_template('add_author.html')
 
 
-@app.route('/add_book', methods = ['GET', 'POST'])
+@app.route('/add_book', methods=['GET', 'POST'])
 def add_book():
     if request.method == 'POST':
         # Get data from the form
@@ -74,12 +72,11 @@ def add_book():
 
 @app.route('/home', methods=['GET'])
 def home():
-    # Query all books from the database
+    # Query all books from the database (with their authors)
     books = Book.query.all()
 
     # Render the home.html template with the books data
     return render_template('home.html', books=books)
-
 
 
 if __name__ == '__main__':

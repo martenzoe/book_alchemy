@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String, Column, ForeignKey
+from sqlalchemy.orm import relationship
 
 # Initialize SQLAlchemy
 db = SQLAlchemy()
@@ -13,6 +14,9 @@ class Author(db.Model):
     name = Column(String, nullable=False)  # Name cannot be null
     birth_date = Column(String)
     date_of_death = Column(String)
+
+    # Relationship to Book
+    books = relationship("Book", back_populates="author")
 
     def __repr__(self):
         """Official representation of the object (for debugging)"""
@@ -32,6 +36,9 @@ class Book(db.Model):
     isbn = Column(String)
     title = Column(String, nullable=False)  # Title cannot be null
     publication_year = Column(Integer)
+
+    # Relationship to Author
+    author = relationship("Author", back_populates="books")
 
     def __repr__(self):
         """Official representation of the object (for debugging)"""
