@@ -72,8 +72,15 @@ def add_book():
 
 @app.route('/home', methods=['GET'])
 def home():
-    # Query all books from the database (with their authors)
+    # Query all books from the database
     books = Book.query.all()
+
+    # Generate cover URLs for each book
+    for book in books:
+        if book.isbn:
+            book.cover_url = f"https://covers.openlibrary.org/b/isbn/{book.isbn}-L.jpg"
+        else:
+            book.cover_url = None  # Fallback, falls keine ISBN vorhanden ist
 
     # Render the home.html template with the books data
     return render_template('home.html', books=books)

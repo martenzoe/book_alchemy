@@ -4,15 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Library</title>
   </head>
   <body>
 
     <h1>Library</h1>
 
     {% for book in books %}
-      <div>
-        <h3>{{ book.title }}</h3>
-        <p>by {{ book.author.name }}</p>
+      <div style="display: flex; align-items: center; margin-bottom: 20px;">
+        <!-- Display Book Cover -->
+        {% if book.cover_url %}
+          <img src="{{ book.cover_url }}" alt="{{ book.title }} cover" style="width: 100px; height: auto; margin-right: 20px;">
+        {% else %}
+          <div style="width: 100px; height: 150px; background-color: #ccc; margin-right: 20px; display: flex; align-items: center; justify-content: center;">
+            No Cover
+          </div>
+        {% endif %}
+
+        <!-- Display Book Title and Author -->
+        <div>
+          <h3>{{ book.title }}</h3>
+          <p>by {{ book.author.name }}</p>
+        </div>
       </div>
       <hr>
     {% endfor %}
