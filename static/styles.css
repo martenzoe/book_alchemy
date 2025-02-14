@@ -1,0 +1,199 @@
+/* Root Variables for Elegant Dark Theme */
+:root {
+  --background-color: #1E1E2E;
+  --secondary-background: #282A36;
+  --primary-color: #C792EA;
+  --secondary-color: #89DDFF;
+  --text-color: #E0E0E0;
+  --accent-color: #F07178;
+  --nav-height: 64px;
+  --grid-gutter-width: 16px;
+  --grid-column-width: calc((100vw - 208px) / 12);
+}
+
+@media (min-width: 744px) {
+  :root {
+    --grid-gutter-width: 24px;
+    --grid-column-width: calc((100vw - 312px) / 12);
+  }
+}
+
+/* General Styles */
+html {
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Layout Container */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--grid-gutter-width);
+}
+
+/* Navigation */
+.navbar {
+  position: sticky;
+  top: 0;
+  height: var(--nav-height);
+  background-color: var(--secondary-background);
+  color: var(--text-color);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px var(--grid-gutter-width);
+}
+
+.navbar .logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.navbar .nav-links {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+.navbar .nav-links a {
+  text-decoration: none;
+  color: var(--text-color);
+  transition: color 0.3s ease-in-out;
+}
+
+.navbar .nav-links a:hover {
+  color: var(--secondary-color);
+}
+
+/* Parallax Header */
+.parallax-header {
+  background: url('/static/images/library.jpg') center/cover no-repeat fixed;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--text-color);
+  position: relative;
+  z-index: 1;
+  padding: 144px var(--grid-gutter-width) 56px;
+  background-blend-mode: overlay;
+  background-color: rgba(30, 30, 46, 0.7);
+}
+
+.parallax-header h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.parallax-header p {
+  font-size: 18px;
+  color: var(--secondary-color);
+}
+
+/* Search Form */
+.search-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search-form input {
+  width: 300px;
+  padding: 8px;
+  border: 1px solid var(--secondary-color);
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: var(--secondary-background);
+  color: var(--text-color);
+}
+
+.search-form button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.search-form button:hover {
+  background-color: #D34C56;
+}
+
+/* Book Grid */
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--grid-gutter-width);
+  margin-top: 20px;
+}
+
+.book-card {
+  background: var(--secondary-background);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+}
+
+.book-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.book-card h3 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+  color: var(--primary-color);
+}
+
+.book-card p {
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+/* Delete Button */
+.delete-form button {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.delete-form button:hover {
+  background-color: #D34C56;
+}

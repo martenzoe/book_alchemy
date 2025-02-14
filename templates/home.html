@@ -4,60 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Library</title>
+    <title>Digital Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   </head>
   <body>
 
-    <h1>Library</h1>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="container">
+        <a href="/home" class="logo">📚 Digital Library</a>
+        <ul class="nav-links">
+          <li><a href="/home">Home</a></li>
+          <li><a href="/add_book">Add Book</a></li>
+          <li><a href="/add_author">Add Author</a></li>
+        </ul>
+      </div>
+    </nav>
 
-    <!-- Search Form -->
-    <form method="POST" action="/home">
-      <input type="text" name="search_keyword" placeholder="Search for a book..." value="{{ search_keyword }}">
-      <button type="submit">Search</button>
-      <br><br>
-    </form>
-
-    <!-- Sorting Buttons -->
-    <div>
-      <a href="/home?sort_by=title">
-        <button>Sort by Title</button>
-      </a>
-      <a href="/home?sort_by=author">
-        <button>Sort by Author</button>
-      </a>
-      <br><br>
+    <!-- Parallax Header -->
+    <div class="parallax-header">
+      <h1>Welcome to the Digital Library</h1>
+      <p>Explore and manage your books with ease.</p>
     </div>
 
-    <!-- Books Display -->
-    {% if books %}
-      {% for book in books %}
-        <div style="display: flex; align-items: center; margin-bottom: 20px;">
-          <!-- Display Book Cover -->
-          {% if book.cover_url %}
-            <img src="{{ book.cover_url }}" alt="{{ book.title }} cover" style="width: 100px; height: auto; margin-right: 20px;">
-          {% else %}
-            <div style="width: 100px; height: 150px; background-color: #ccc; margin-right: 20px; display: flex; align-items: center; justify-content: center;">
-              No Cover
+    <!-- Main Content -->
+    <div class="container">
+      <!-- Search Form -->
+      <form method="POST" action="/home" class="search-form">
+        <input type="text" name="search_keyword" placeholder="Search for a book..." value="{{ search_keyword }}">
+        <button type="submit">Search</button>
+      </form>
+
+      <!-- Books Display -->
+      {% if books %}
+        <div class="book-grid">
+          {% for book in books %}
+            <div class="book-card">
+              {% if book.cover_url %}
+                <img src="{{ book.cover_url }}" alt="{{ book.title }} cover" class="book-cover">
+              {% else %}
+                <div class="book-placeholder">No Cover</div>
+              {% endif %}
+              <h3>{{ book.title }}</h3>
+              <p>by {{ book.author.name }}</p>
+              <!-- Delete Button -->
+              <form method="POST" action="/book/{{ book.book_id }}/delete" class="delete-form">
+                <button type="submit">Delete Book</button>
+              </form>
             </div>
-          {% endif %}
-
-          <!-- Display Book Title and Author -->
-          <div style="flex-grow: 1;">
-            <h3>{{ book.title }}</h3>
-            <p>by {{ book.author.name }}</p>
-          </div>
-
-          <!-- Delete Button -->
-          <form method="POST" action="/book/{{ book.book_id }}/delete" style="margin-left: 20px;">
-            <button type="submit" style="background-color: red; color: white;">Delete Book</button>
-          </form>
+          {% endfor %}
         </div>
-        <hr>
-      {% endfor %}
-    {% else %}
-      <!-- No Results Message -->
-      <p>No books found matching your search criteria.</p>
-    {% endif %}
+      {% else %}
+        <!-- No Results Message -->
+        <p>No books found matching your search criteria.</p>
+      {% endif %}
+    </div>
 
   </body>
 </html>
