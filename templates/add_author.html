@@ -21,6 +21,16 @@
       </div>
     </nav>
 
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Form -->
     <div class="form-container">
       <h2>Add New Author</h2>
       <form action="/add_author" method="POST">
@@ -28,7 +38,7 @@
         <input type="text" id="name" name="name" required>
 
         <label for="birthdate">Birthdate:</label>
-        <input type="date" id="birthdate" name="birthdate" required>
+        <input type="date" id="birthdate" name="birthdate">
 
         <label for="date_of_death">Date of Death:</label>
         <input type="date" id="date_of_death" name="date_of_death">

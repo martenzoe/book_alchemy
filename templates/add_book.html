@@ -21,18 +21,32 @@
       </div>
     </nav>
 
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Form -->
     <div class="form-container">
       <h2>Add New Book</h2>
       <form action="/add_book" method="POST">
+        <!-- Book Title -->
         <label for="title">Book Title:</label>
         <input type="text" id="title" name="title" required>
 
+        <!-- ISBN -->
         <label for="isbn">ISBN:</label>
-        <input type="text" id="isbn" name="isbn" required>
+        <input type="text" id="isbn" name="isbn">
 
+        <!-- Publication Year -->
         <label for="publication_year">Publication Year:</label>
-        <input type="text" id="publication_year" name="publication_year" required>
+        <input type="number" id="publication_year" name="publication_year">
 
+        <!-- Author Dropdown -->
         <label for="author_id">Author:</label>
         <select id="author_id" name="author_id" required>
           {% for author in authors %}
@@ -40,6 +54,7 @@
           {% endfor %}
         </select>
 
+        <!-- Submit Button -->
         <input type="submit" value="Add Book">
       </form>
     </div>
