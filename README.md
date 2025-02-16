@@ -121,6 +121,9 @@ To set up the database, follow these steps:
    with app.app_context():
        db.create_all()
    ```
+Important!!! Only run this once for creating the tables, after first run please comment it out:   
+with app.app_context():
+       db.create_all()
 
 3. Run the application once to create the tables in your SQLite database:
 
