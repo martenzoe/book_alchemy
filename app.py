@@ -1,13 +1,16 @@
 from flask import Flask, render_template, request, redirect, flash
 from sqlalchemy.exc import SQLAlchemyError
 from data_models import db, Author, Book
+import os
+
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 # Initialize the Flask app
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Required for flash messages
 
 # Configure the SQLite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/martenzollner/Desktop/new_projects/book_alchemy/data/library.sqlite'
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(BASE_DIR, 'data', 'library.sqlite')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Avoid unnecessary warnings
 
 # Bind the database to the app
